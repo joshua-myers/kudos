@@ -12,6 +12,8 @@ const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
+    firstName: '',
+    lastName: ''
   })
 
   // Updates the form data when an input changes
@@ -32,6 +34,22 @@ const Login = () => {
         <p className="font-semibold text-slate-300">{action === Action.login ? 'Log In To Give Some Praise!' : 'Sign Up To Get Started!'}</p>
 
         <form method="POST" className="rounded-2xl bg-gray-200 p-6 w-96">
+          {action === Action.register && (
+            <>
+              <FormField
+                htmlFor="firstName"
+                label="First Name"
+                onChange={e => handleInputChange(e, 'firstName')}
+                value={formData.firstName}
+              />
+              <FormField
+                htmlFor="lastName"
+                label="Last Name"
+                onChange={e => handleInputChange(e, 'lastName')}
+                value={formData.lastName}
+              />
+            </>
+          )}
           <FormField
             htmlFor="email"
             label="Email"
