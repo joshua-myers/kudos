@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { FormField } from '~/components/formField'
 import { Layout } from '~/components/layout'
 
-export default function Login() {
+export const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
