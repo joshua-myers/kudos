@@ -1,6 +1,3 @@
-export type RegisterForm = {
-  email: string
-  password: string
-  firstName: string
-  lastName: string
-}
+import { User } from "@prisma/client"
+
+export type RegisterForm = Pick<User, 'email' | 'password'> & Pick<User['profile'], 'firstName' | 'lastName'>
