@@ -1,11 +1,60 @@
+import { ActionFunction, json } from '@remix-run/node'
 import { useState } from 'react'
 import { FormField } from '~/components/formField'
 import { Layout } from '~/components/layout'
+import { login, register } from '~/utils/auth.server'
+import { validateEmail, validateName, validatePassword } from '~/utils/validators.server'
 
 enum Action {
   login,
   register
 }
+
+// #region Server
+export const action: ActionFunction = async ({ request }) => {
+  const form = await request.formData();
+  const action = form.get('_action') as unknown as Action;
+  const email = form.get('email');
+  const password = form.get('password');
+  let firstName = form.get('firstName');
+  let lastName = form.get('lastName');
+
+  if (typeof action !== typeof Action || typeof email !== 'string' || typeof password !== 'string') {
+    return json({ error: `Invalid Form Data`, form: action }, { status: 400 });
+  }
+
+  if (action === Action.register && (typeof firstName !== 'string' || typeof lastName !== 'string')) {
+    return json({ error: `Invalid Form Data`, form: action }, { status: 400 });
+  }
+
+  const errors = {
+    email: validateEmail(email),
+    password: validatePassword(password),
+    ...(action === Action.register
+      ? {
+        firstName: validateName((firstName as string) || ''),
+        lastName: validateName((lastName as string) || ''),
+      }
+      : {}),
+  }
+
+  if (Object.values(errors).some(Boolean))
+    return json({ errors, fields: { email, password, firstName, lastName }, form: action }, { status: 400 })
+
+  switch (action) {
+    case Action.login: {
+      return await login({ email, password })
+    }
+    case Action.register: {
+      firstName = firstName as string
+      lastName = lastName as string
+      return await register({ email, password, firstName, lastName })
+    }
+    default:
+      return json({ error: `Invalid Form Data` }, { status: 400 });
+  }
+}
+// #endregion
 
 const Login = () => {
   const [action, setAction] = useState(Action.login);
