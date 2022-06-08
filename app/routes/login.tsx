@@ -1,8 +1,8 @@
-import { ActionFunction, json } from '@remix-run/node'
+import { ActionFunction, json, LoaderFunction, redirect } from '@remix-run/node'
 import { useState } from 'react'
 import { FormField } from '~/components/formField'
 import { Layout } from '~/components/layout'
-import { login, register } from '~/utils/auth.server'
+import { getUser, login, register } from '~/utils/auth.server'
 import { validateEmail, validateName, validatePassword } from '~/utils/validators.server'
 
 enum Action {
@@ -11,26 +11,35 @@ enum Action {
 }
 
 // #region Server
+export const loader: LoaderFunction = async ({ request }) => {
+  // If there's already a user in the session, redirect to the home page
+  return (await getUser(request)) ? redirect('/') : null
+}
+
 export const action: ActionFunction = async ({ request }) => {
   const form = await request.formData();
-  const action = form.get('_action') as unknown as Action;
+  let formAction = form.get('_action') as string | Action;
   const email = form.get('email');
   const password = form.get('password');
   let firstName = form.get('firstName');
   let lastName = form.get('lastName');
 
-  if (typeof action !== typeof Action || typeof email !== 'string' || typeof password !== 'string') {
-    return json({ error: `Invalid Form Data`, form: action }, { status: 400 });
+  if (typeof formAction === 'string') {
+    formAction = parseInt(formAction, 10) as Action;
   }
 
-  if (action === Action.register && (typeof firstName !== 'string' || typeof lastName !== 'string')) {
-    return json({ error: `Invalid Form Data`, form: action }, { status: 400 });
+  if ((formAction !== Action.login && formAction !== Action.register) || typeof email !== 'string' || typeof password !== 'string') {
+    return json({ error: `Invalid Form Data`, form: formAction }, { status: 400 });
+  }
+
+  if (formAction === Action.register && (typeof firstName !== 'string' || typeof lastName !== 'string')) {
+    return json({ error: `Invalid Form Data`, form: formAction }, { status: 400 });
   }
 
   const errors = {
     email: validateEmail(email),
     password: validatePassword(password),
-    ...(action === Action.register
+    ...(formAction === Action.register
       ? {
         firstName: validateName((firstName as string) || ''),
         lastName: validateName((lastName as string) || ''),
@@ -39,9 +48,9 @@ export const action: ActionFunction = async ({ request }) => {
   }
 
   if (Object.values(errors).some(Boolean))
-    return json({ errors, fields: { email, password, firstName, lastName }, form: action }, { status: 400 })
+    return json({ errors, fields: { email, password, firstName, lastName }, form: formAction }, { status: 400 })
 
-  switch (action) {
+  switch (formAction) {
     case Action.login: {
       return await login({ email, password })
     }
@@ -113,12 +122,13 @@ const Login = () => {
             onChange={e => handleInputChange(e, 'password')}
           />
           <div className="w-full text-center">
-            <input
+            <button
               type="submit"
               name="_action"
               className="rounded-xl mt-2 bg-yellow-300 px-3 py-2 text-blue-600 font-semibold transition duration-300 ease-in-out hover:bg-yellow-400 hover:-translate-y-1"
-              value={action === Action.login ? "Sign In" : "Sign Up"}
-            />
+              value={action}>
+              {action === Action.login ? "Sign In" : "Sign Up"}
+            </button>
           </div>
         </form>
       </div>
