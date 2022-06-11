@@ -16,3 +16,21 @@ export const createUser = async (user: RegisterForm) => {
   })
   return { id: newUser.id, email: user.email }
 }
+
+/**
+ * Retrieves a list of users except the provided userId.
+ * @param userId current user id
+ * @returns List of users
+ */
+export const getOtherUsers = async (userId: string) => {
+  return prisma.user.findMany({
+    where: {
+      id: { not: userId },
+    },
+    orderBy: {
+      profile: {
+        firstName: 'asc',
+      },
+    },
+  })
+}

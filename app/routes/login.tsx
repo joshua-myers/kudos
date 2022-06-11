@@ -1,7 +1,7 @@
 import { ActionFunction, json, LoaderFunction, redirect } from '@remix-run/node'
 import { useActionData } from '@remix-run/react'
 import { useEffect, useRef, useState } from 'react'
-import { FormField } from '~/components/formField'
+import { FormField } from '~/components/form-field'
 import { Layout } from '~/components/layout'
 import { getUser, login, register } from '~/utils/auth.server'
 import { validateEmail, validateName, validatePassword } from '~/utils/validators.server'
