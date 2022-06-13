@@ -1,5 +1,6 @@
 import { json, LoaderFunction, redirect } from '@remix-run/node'
 import { useLoaderData } from '@remix-run/react'
+import { Modal } from '~/components/modal'
 import { getUserById } from '~/utils/user.server'
 
 export const loader: LoaderFunction = async ({ request, params }) => {
@@ -14,6 +15,9 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 }
 
 export default function KudoModal() {
-  const data = useLoaderData()
-  return <h2> User: {data.userId} </h2>
+  const { recipient } = useLoaderData()
+
+  return <Modal isOpen={true} className="w-2/3 p-10">
+    <h2> User: {recipient.profile.firstName} {recipient.profile.lastName} </h2>
+  </Modal>
 }
