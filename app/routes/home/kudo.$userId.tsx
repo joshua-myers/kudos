@@ -1,14 +1,46 @@
-import { KudoStyle } from '@prisma/client'
-import { json, LoaderFunction, redirect } from '@remix-run/node'
+import { Color, Emoji, KudoStyle } from '@prisma/client'
+import { ActionFunction, json, LoaderFunction, redirect } from '@remix-run/node'
 import { useActionData, useLoaderData } from '@remix-run/react'
 import { useState } from 'react'
 import { Kudo } from '~/components/kudo'
 import { Modal } from '~/components/modal'
 import { SelectBox } from '~/components/select-box'
 import { UserCircle } from '~/components/user-circle'
-import { getUser } from '~/utils/auth.server'
+import { getUser, requireUserId } from '~/utils/auth.server'
 import { colorMap, emojiMap } from '~/utils/constants'
+import { createKudo } from '~/utils/kudos.server'
 import { getUserById } from '~/utils/user.server'
+
+export const action: ActionFunction = async ({ request }) => {
+  const userId = await requireUserId(request)
+  const form = await request.formData()
+  const message = form.get('message')
+  const backgroundColor = form.get('backgroundColor')
+  const textColor = form.get('textColor')
+  const emoji = form.get('emoji')
+  const recipientId = form.get('recipientId')
+  if (
+    typeof message !== 'string' ||
+    typeof recipientId !== 'string' ||
+    typeof backgroundColor !== 'string' ||
+    typeof textColor !== 'string' ||
+    typeof emoji !== 'string'
+  ) {
+    return json({ error: `Invalid Form Data` }, { status: 400 })
+  }
+  if (!message.length) {
+    return json({ error: `Please provide a message.` }, { status: 400 })
+  }
+  if (!recipientId.length) {
+    return json({ error: `No recipient found...` }, { status: 400 })
+  }
+  await createKudo(message, userId, recipientId, {
+    backgroundColor: backgroundColor as Color,
+    textColor: textColor as Color,
+    emoji: emoji as Emoji,
+  })
+  return redirect('/home')
+}
 
 export const loader: LoaderFunction = async ({ request, params }) => {
   const { userId } = params
@@ -61,7 +93,7 @@ export default function KudoModal() {
 
   const colors = getOptions(colorMap)
   const emojis = getOptions(emojiMap)
-  
+
   return (
     <Modal isOpen={true} className="w-2/3 p-10">
       <div className="text-xs font-semibold text-center tracking-wide text-red-500 w-full mb-2">{formError}</div>
