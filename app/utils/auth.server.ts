@@ -2,7 +2,7 @@ import { createCookieSessionStorage, json, redirect } from '@remix-run/node'
 import bcrypt from 'bcryptjs'
 import { prisma } from './prisma.server'
 import type { LoginForm, RegisterForm } from './types.server'
-import { createUser } from './users.server'
+import { createUser } from './user.server'
 
 export const register = async (user: RegisterForm) => {
   const exists = await prisma.user.count({ where: { email: user.email } })
