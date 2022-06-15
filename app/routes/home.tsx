@@ -1,4 +1,4 @@
-import { Kudo as IKudo, Profile } from '@prisma/client'
+import { Kudo as IKudo, Prisma, Profile } from '@prisma/client'
 import { json, LoaderFunction } from '@remix-run/node'
 import { Outlet, useLoaderData } from '@remix-run/react'
 import { Kudo } from '~/components/kudo'
@@ -18,7 +18,42 @@ interface KudoWithProfile extends IKudo {
 export const loader: LoaderFunction = async ({ request }) => {
   const userId = await requireUserId(request)
   const users = await getOtherUsers(userId)
-  const kudos = await getFilteredKudos(userId, {}, {})
+
+  const url = new URL(request.url)
+  const sort = url.searchParams.get('sort')
+  const filter = url.searchParams.get('filter')
+
+  let sortOptions: Prisma.KudoOrderByWithRelationInput = {}
+  if (sort) {
+    if (sort === 'date') {
+      sortOptions = { createdAt: 'desc' }
+    }
+    if (sort === 'sender') {
+      sortOptions = { author: { profile: { firstName: 'asc' } } }
+    }
+    if (sort === 'emoji') {
+      sortOptions = { style: { emoji: 'asc' } }
+    }
+  }
+
+  let textFilter: Prisma.KudoWhereInput = {}
+  if (filter) {
+    textFilter = {
+      OR: [
+        { message: { mode: 'insensitive', contains: filter } },
+        {
+          author: {
+            OR: [
+              { profile: { is: { firstName: { mode: 'insensitive', contains: filter } } } },
+              { profile: { is: { lastName: { mode: 'insensitive', contains: filter } } } },
+            ],
+          },
+        },
+      ],
+    }
+  }
+
+  const kudos = await getFilteredKudos(userId, sortOptions, textFilter)
   return json({ users, kudos })
 }
 
