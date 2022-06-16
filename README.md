@@ -1,4 +1,5 @@
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/joshua-myers/kudos)
+![Vercel](https://vercelbadge.vercel.app/api/joshua-myers/kudos)
 
 # Welcome to Remix!
 
