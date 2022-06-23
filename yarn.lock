@@ -27,28 +27,7 @@
   resolved "https://registry.npmjs.org/@babel/compat-data/-/compat-data-7.17.10.tgz"
   integrity sha512-GZt/TCsG70Ms19gfZO1tM4CVnXsPgEPBCpJu+Qz3L0LUDsY5nZqFZglIoPC1kIYOtNBZlrnFT+klg12vFGZXrw==
 
-"@babel/core@^7.13.16", "@babel/core@^7.17.5":
-  version "7.18.2"
-  resolved "https://registry.npmjs.org/@babel/core/-/core-7.18.2.tgz"
-  integrity sha512-A8pri1YJiC5UnkdrWcmfZTJTV85b4UXTAfImGmCfYmax4TR9Cw8sDS0MOk++Gp2mE/BefVJ5nwy5yzqNJbP/DQ==
-  dependencies:
-    "@ampproject/remapping" "^2.1.0"
-    "@babel/code-frame" "^7.16.7"
-    "@babel/generator" "^7.18.2"
-    "@babel/helper-compilation-targets" "^7.18.2"
-    "@babel/helper-module-transforms" "^7.18.0"
-    "@babel/helpers" "^7.18.2"
-    "@babel/parser" "^7.18.0"
-    "@babel/template" "^7.16.7"
-    "@babel/traverse" "^7.18.2"
-    "@babel/types" "^7.18.2"
-    convert-source-map "^1.7.0"
-    debug "^4.1.0"
-    gensync "^1.0.0-beta.2"
-    json5 "^2.2.1"
-    semver "^6.3.0"
-
-"@babel/core@^7.18.2":
+"@babel/core@^7.13.16", "@babel/core@^7.17.5", "@babel/core@^7.18.2":
   version "7.18.5"
   resolved "https://registry.yarnpkg.com/@babel/core/-/core-7.18.5.tgz#c597fa680e58d571c28dda9827669c78cdd7f000"
   integrity sha512-MGY8vg3DxMnctw0LdvSEojOsumc70g0t18gNyUdAZqB1Rpd1Bqo/svHGvt+UJ6JcGX+DIekGFDxxIWofBxLCnQ==
@@ -1232,10 +1211,10 @@
   resolved "https://registry.yarnpkg.com/@prisma/engines/-/engines-3.15.1-1.461d6a05159055555eb7dfb337c9fb271cbd4d7e.tgz#f691893df506b93e3cb1ccc15ec6e5ac64e8e570"
   integrity sha512-NHlojO1DFTsSi3FtEleL9QWXeSF/UjhCW0fgpi7bumnNZ4wj/eQ+BJJ5n2pgoOliTOGv9nX2qXvmHap7rJMNmg==
 
-"@remix-run/dev@^1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.6.0.tgz#82c73bff2e80d6c278e00f2cad3f3f2097c8fb60"
-  integrity sha512-HkyLzALaxOvOAzdG79U1PqU3rE3RUka2XYSus/qHNcHxujjkeiCbhjx2aIkxRFStTpC8pa2gWZGyNPr+IoJCpg==
+"@remix-run/dev@^1.6.1":
+  version "1.6.1"
+  resolved "https://registry.yarnpkg.com/@remix-run/dev/-/dev-1.6.1.tgz#15f18fd5d7e180fd64887d189cf2f938dae3686b"
+  integrity sha512-4jAGIR8QphGpdBuf69qcbNFLwJcwuOIan2B9cpzCg3fzkCyEpEaS8AIHur3sALnMd//iSmn9r0dmZjG0pLUebQ==
   dependencies:
     "@babel/core" "^7.18.2"
     "@babel/plugin-syntax-jsx" "^7.17.12"
@@ -1243,7 +1222,7 @@
     "@babel/preset-typescript" "^7.17.12"
     "@esbuild-plugins/node-modules-polyfill" "^0.1.4"
     "@npmcli/package-json" "^2.0.0"
-    "@remix-run/server-runtime" "1.6.0"
+    "@remix-run/server-runtime" "1.6.1"
     cacache "^15.0.5"
     chalk "^4.1.2"
     chokidar "^3.5.1"
@@ -1337,19 +1316,6 @@
     compression "^1.7.4"
     express "^4.17.1"
     morgan "^1.10.0"
-
-"@remix-run/server-runtime@1.6.0":
-  version "1.6.0"
-  resolved "https://registry.yarnpkg.com/@remix-run/server-runtime/-/server-runtime-1.6.0.tgz#ff7617324721941eabd2f3e32e284f9df4e618a7"
-  integrity sha512-23qG0+c1yUuvKOB4R70nWW+I5m+u1jQzwwP+pEn0y9uygO6PcOvA4Y6wE1ojpSmqMANri5gLZFrM3vuRZNl6rA==
-  dependencies:
-    "@types/cookie" "^0.4.0"
-    "@web3-storage/multipart-parser" "^1.0.0"
-    cookie "^0.4.1"
-    jsesc "^3.0.1"
-    react-router-dom "^6.2.2"
-    set-cookie-parser "^2.4.8"
-    source-map "^0.7.3"
 
 "@remix-run/server-runtime@1.6.1":
   version "1.6.1"
