@@ -24,7 +24,7 @@
     "@remix-run/eslint-config": "^1.6.3",
     "@remix-run/serve": "^1.6.3",
     "@types/bcryptjs": "^2.4.2",
-    "@types/react": "^18.0.13",
+    "@types/react": "^18.0.15",
     "@types/react-dom": "^18.0.5",
     "autoprefixer": "^10.4.7",
     "concurrently": "^7.2.2",
