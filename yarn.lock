@@ -1575,7 +1575,7 @@
     source-map-support "^0.5.21"
     stream-slice "^0.1.2"
 
-"@remix-run/node@^1.6.5":
+"@remix-run/node@1.6.5", "@remix-run/node@^1.6.5":
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/@remix-run/node/-/node-1.6.5.tgz#dbc3fae9f1c8d7cabe82b699aaf3c076fd27e3b9"
   integrity sha512-UMy775OV7LTzGCEpP9g7LUDYY/Rc5JUT5jgjK4vP4P+GHCTpnHjWdvloda379oN5JiRuMDD3IXwg2wnMNzrWPQ==
@@ -1634,12 +1634,12 @@
     set-cookie-parser "^2.4.8"
     source-map "^0.7.3"
 
-"@remix-run/vercel@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@remix-run/vercel/-/vercel-1.6.3.tgz#afcc1ae48bd5c701978047fce1f2cec9f1fad986"
-  integrity sha512-YhjhYlwK7gAfXFscuRRERV0JPk8Wdi59riYHAUPBhQyShs/IMMbKuja9fdUMe8jw0uYu2vt3LB8pI9cNLd3L8Q==
+"@remix-run/vercel@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@remix-run/vercel/-/vercel-1.6.5.tgz#1f6ca7d6a656cbb1c9533cdbdbf44ced12cc9a2b"
+  integrity sha512-qJ1A12BQ6KeHz8O02F/VP+3ZqvP4X8cCL+rjLBPxsdmKZoxx+rjJ4f2Fo/Tec2cHDf4Xaw51hTMBjUqlRXbhlQ==
   dependencies:
-    "@remix-run/node" "1.6.3"
+    "@remix-run/node" "1.6.5"
 
 "@remix-run/web-blob@^3.0.3", "@remix-run/web-blob@^3.0.4":
   version "3.0.4"
